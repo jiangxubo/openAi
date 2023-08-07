@@ -1,0 +1,31 @@
+name: Build and Deploy
+on: # 监听 main 分支上的 push 事件
+  push:
+    branches:
+      - main
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Use Node.js 16
+        uses: actions/setup-node@v3
+        with:
+          node-version: "16.x"
+
+      - name: Build Project
+        run: |
+          yarn install
+          yarn run build
+
+      - name: 部署
+        uses: appleboy/scp-action@v0.1.4
+        with:
+          host: ${{ secrets.JIANG_IP }}
+          username: ${{ secrets.JIANG_USER }}
+          key: ${{ secrets.JIANG_KEY }}
+          source: "dist/*"
+          target: '/jiang/openAi'
