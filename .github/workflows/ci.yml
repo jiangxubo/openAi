@@ -28,4 +28,4 @@ jobs:
           username: ${{ secrets.JIANG_USER }}
           key: ${{ secrets.JIANG_KEY }}
           source: "dist/*"
-          target: '/jiang/openAi'
+          target: '/jiang/openAi/'
